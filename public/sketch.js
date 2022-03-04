@@ -41,8 +41,7 @@ function draw() {
     if (tones[i].checkMass()) {
       tones[i].mass = 0;
       for (let i = tones.length - 1; i >= 0; i--) {
-        allPos[i] = tones[i].pos.y;
-        allPos[`${i}Mass`] = tones[i].mass;
+        allPos[i] = [tones[i].pos.y, tones[i].mass];
       }
       console.log(allPos);
       socket.emit("talkback", allPos);
@@ -51,8 +50,7 @@ function draw() {
     }
   }
   for (let i = tones.length - 1; i >= 0; i--) {
-    allPos[i] = tones[i].pos.y;
-    allPos[`${i}Mass`] = tones[i].mass;
+    allPos[i] = [tones[i].pos.y, tones[i].mass];
   }
   console.log(allPos);
   socket.emit("talkback", allPos);
