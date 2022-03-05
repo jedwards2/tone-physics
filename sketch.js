@@ -2,20 +2,16 @@ let tones = [];
 let poleValues = [55, 110, 220, 440, 880, 1760];
 let poles = [];
 let massSlider;
-let socket;
-//set gravity (good at 1)
-const G = 2;
-//i wish i was dead
 
 function setup() {
-  createCanvas(300, 1600);
+  createCanvas(400, 2000);
   let x = 1;
   for (let q = poleValues.length - 1; q >= 0; q--) {
     let pole = new Pole(poleValues[q], x * x);
     poles.push(pole);
     x += 1;
   }
-  socket = io.connect("http://localhost:3000");
+  console.log(poles);
 
   massSlider = createSlider(11, 255, 10);
   massSlider.position(450, 10);
@@ -23,8 +19,7 @@ function setup() {
 }
 
 function draw() {
-  background(0);
-  let allPos = {};
+  background(100);
   for (let q = poles.length - 1; q >= 0; q--) {
     poles[q].display();
   }
@@ -39,22 +34,7 @@ function draw() {
 
     tones[i].display();
     tones[i].loseMass();
-    if (tones[i].checkMass()) {
-      tones[i].mass = 0;
-      for (let i = tones.length - 1; i >= 0; i--) {
-        allPos[i] = [tones[i].pos.y, tones[i].mass];
-      }
-      console.log(allPos);
-      socket.emit("talkback", allPos);
-      tones[i].removeTone();
-      return;
-    }
   }
-  for (let i = tones.length - 1; i >= 0; i--) {
-    allPos[i] = [tones[i].pos.y, tones[i].mass];
-  }
-  console.log(allPos);
-  socket.emit("talkback", allPos);
 }
 
 function mousePressed() {
@@ -67,6 +47,7 @@ function mousePressed() {
     let dist = tones[i].pos.y - mouseY;
     let force = createVector(0, dist);
     let distanceSq = constrain(force.mag(), 1, 10000);
+    let G = 5;
 
     let strength = (G * (tone.mass * tones[i].mass)) / distanceSq;
 
@@ -83,10 +64,6 @@ function resetAllIndices() {
   }
 }
 
-// function windowResized() {
-//   resizeCanvas(windowWidth, windowHeight);
-// }
-
 class Tone {
   constructor(y, m) {
     this.pos = createVector(width, y);
@@ -96,7 +73,7 @@ class Tone {
     this.mass = m;
     this.r = sqrt(this.mass) * 2;
     this.positionHistory = [];
-    this.c = 255;
+    this.c = [random(155) + 100, 60, random(155) + 100];
   }
 
   drag() {
@@ -104,7 +81,6 @@ class Tone {
     drag.normalize();
     drag.mult(-1);
 
-    //set drag
     let c = 0.1;
     let speedSq = this.velocity.magSq();
     drag.setMag(c * speedSq);
@@ -120,17 +96,13 @@ class Tone {
   updatePosition() {
     this.velocity.add(this.acc);
     this.pos.add(this.velocity);
-    if (this.pos.y < 0 || this.pos.y > height) {
-      this.pos.y = 1;
-      this.acc.y *= -1;
-      this.velocity.y *= -1;
-    }
     this.acc.set(0, 0);
   }
 
   display() {
     push();
-    stroke(this.c);
+    noStroke();
+    fill(this.c);
     let radius = this.mass / 2;
     circle(this.pos.x, this.pos.y, radius);
     pop();
@@ -152,22 +124,17 @@ class Tone {
 
       push();
       noStroke();
-      let alpha = map(i, width, 0, 255, 0);
-      fill(this.c, this.c, this.c, alpha);
-      let radius = this.mass / 2;
-
-      circle(this.positionHistory[i][0], this.positionHistory[i][1], radius);
+      fill(this.c);
+      circle(this.positionHistory[i][0], this.positionHistory[i][1], 2);
       pop();
     }
   }
   loseMass() {
     // controls the decay of the tones
-    this.mass -= 0.005;
-  }
-  checkMass() {
+    this.mass -= 0.025;
     if (this.mass <= 1) {
-      return true;
-    } else return false;
+      this.removeTone();
+    }
   }
   removeTone() {
     tones.splice(this.index, 1);
@@ -185,6 +152,7 @@ class Pole {
   attract(tone) {
     let force = p5.Vector.sub(this.pos, tone.pos);
     let distanceSq = constrain(force.magSq(), 100, 10000);
+    let G = 10;
 
     let strength = (G * (this.mass * tone.mass)) / distanceSq;
     force.setMag(strength);
@@ -193,7 +161,6 @@ class Pole {
 
   display() {
     noFill();
-    stroke(255, 255, 255, 100);
     line(0, this.pos.y, width, this.pos.y);
   }
 }

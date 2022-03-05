@@ -1,21 +1,23 @@
 {
-  "name": "tone_phys_sockets",
+  "name": "tone-physics",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
     "devstart": "nodemon server.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  },
   "dependencies": {
     "express": "^4.17.2",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
   }
 }
