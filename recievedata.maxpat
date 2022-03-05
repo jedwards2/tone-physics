@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 532.0, 62.0, 577.0, 799.0 ],
+		"rect" : [ 877.0, 149.0, 577.0, 799.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -565,7 +565,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 20.0, 169.0, 114.0, 35.0 ],
-					"text" : "talkback dictionary u851001891"
+					"text" : "talkback dictionary u930008844"
 				}
 
 			}
@@ -627,8 +627,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 1
 					}
 ,
