@@ -138,18 +138,19 @@ class Tone {
   }
 
   recordHistory() {
-    if (this.historyCount % 3 == 0) {
+    if (this.historyCount % 5 == 0) {
       this.positionHistory.push([this.pos.x, this.pos.y]);
     }
 
     this.historyCount += 1;
-    console.log(this.positionHistory.length);
+    // console.log(this.positionHistory.length);
   }
 
   updateHistory() {
     for (let i = this.positionHistory.length - 1; i >= 0; i--) {
+      let alpha = map(this.positionHistory[i][0], width, 80, 255, 0);
       //remove [x, y] position if x is less than 0
-      if (this.positionHistory[i][0] < 0) {
+      if (this.positionHistory[i][0] < 0 || alpha < 10) {
         this.positionHistory.splice(i, 1);
       }
 
@@ -158,7 +159,7 @@ class Tone {
 
       push();
       noStroke();
-      let alpha = map(i, width, 0, 255, 0);
+
       fill(this.c, this.c, this.c, alpha);
       let radius = this.mass / 2;
 
