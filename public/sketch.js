@@ -97,6 +97,7 @@ class Tone {
     this.r = sqrt(this.mass) * 2;
     this.positionHistory = [];
     this.c = 255;
+    this.historyCount = 0;
   }
 
   drag() {
@@ -137,7 +138,12 @@ class Tone {
   }
 
   recordHistory() {
-    this.positionHistory.push([this.pos.x, this.pos.y]);
+    if (this.historyCount % 3 == 0) {
+      this.positionHistory.push([this.pos.x, this.pos.y]);
+    }
+
+    this.historyCount += 1;
+    console.log(this.positionHistory.length);
   }
 
   updateHistory() {
