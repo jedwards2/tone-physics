@@ -121,11 +121,13 @@ class Tone {
   updatePosition() {
     this.velocity.add(this.acc);
     this.pos.add(this.velocity);
-    if (this.pos.y < 0 || this.pos.y > height) {
-      this.pos.y = 1;
+    //make sure it doesn't go negative
+    if (this.pos.y < 1 || this.pos.y > height) {
+      this.pos.y = 5;
       this.acc.y *= -1;
       this.velocity.y *= -1;
     }
+    //set acceleration back to 0
     this.acc.set(0, 0);
   }
 
