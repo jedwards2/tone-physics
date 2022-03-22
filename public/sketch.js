@@ -5,10 +5,10 @@ let massSlider;
 let socket;
 //set gravity (good at 1)
 const G = 2;
-//i wish i was dead
 
 function setup() {
-  createCanvas(300, 1600);
+  let cnv = createCanvas(windowWidth, 1600);
+  cnv.position(0, 50);
   let x = 1;
   for (let q = poleValues.length - 1; q >= 0; q--) {
     let pole = new Pole(poleValues[q], x * x);
@@ -17,8 +17,8 @@ function setup() {
   }
   socket = io.connect("http://localhost:3000");
 
-  massSlider = createSlider(11, 255, 10);
-  massSlider.position(450, 10);
+  massSlider = createSlider(11, 150, 10);
+  massSlider.position(10, 10);
   massSlider.style("width", "80px");
 }
 
@@ -44,7 +44,7 @@ function draw() {
       for (let i = tones.length - 1; i >= 0; i--) {
         allPos[i] = [tones[i].pos.y, tones[i].mass];
       }
-      console.log(allPos);
+      // console.log(allPos);
       socket.emit("talkback", allPos);
       tones[i].removeTone();
       return;
@@ -53,12 +53,13 @@ function draw() {
   for (let i = tones.length - 1; i >= 0; i--) {
     allPos[i] = [tones[i].pos.y, tones[i].mass];
   }
-  console.log(allPos);
+  // console.log(allPos);
   socket.emit("talkback", allPos);
 }
 
 function mousePressed() {
-  if (mouseX > width || mouseY > height) {
+  console.log(mouseX, mouseY);
+  if (mouseX > width || mouseY > height || mouseY < 0) {
     return;
   }
   let tone = new Tone(mouseY, massSlider.value());

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 877.0, 149.0, 577.0, 799.0 ],
+		"rect" : [ 639.0, 94.0, 839.0, 854.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -476,7 +476,7 @@
 					"numoutlets" : 5,
 					"outlettype" : [ "signal", "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 230.25, 909.299986124038696, 48.0, 136.0 ],
+					"patching_rect" : [ 230.0, 904.299986124038696, 48.0, 136.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~",
@@ -565,7 +565,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 20.0, 169.0, 114.0, 35.0 ],
-					"text" : "talkback dictionary u930008844"
+					"text" : "talkback dictionary u497009671"
 				}
 
 			}
@@ -627,6 +627,8 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
+						"node_bin_path" : "",
+						"npm_bin_path" : "",
 						"watch" : 1
 					}
 ,
